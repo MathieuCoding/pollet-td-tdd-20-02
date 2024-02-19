@@ -37,6 +37,14 @@ class Basket {
     emptyBasket() {
         this.items = [];
     }
+
+    addDiscount(discount) {
+        this.items = this.items.map(item => {
+            item.price = item.price - (item.price * discount);
+            return item;
+        });
+    }
+
 }
 
 module.exports = {

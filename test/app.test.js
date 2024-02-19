@@ -59,7 +59,16 @@ describe('Testing the Basket Function', function() {
 
     it('8. Adding an item to the basket', function(done) {
         let b5 = new Basket();
-        expect(b5.addItem('Apple', 2)).to.deep.equal([{name: 'Apple', price: 2}]);
+        b5.addItem('Apple', 2);
+        expect(b5.items).to.deep.equal([{name: 'Apple', price: 2}]);
+        done();
+    })
+    it('9. Adding a discount to the items in the basket', function(done) {
+        let b6 = new Basket();
+        b6.addItem('Apple', 2);
+        b6.addItem('Banana', 3);
+        b6.addDiscount(0.1);
+        expect(b6.items).to.deep.equal([{name: 'Apple', price: 1.8}, {name: 'Banana', price: 2.7}]);
         done();
     })
 });
