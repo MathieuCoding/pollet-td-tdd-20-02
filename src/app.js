@@ -41,6 +41,7 @@ class Basket {
     addDiscount(discount) {
         this.items = this.items.map(item => {
             item.price = item.price - (item.price * discount);
+            item.price = parseFloat(item.price.toFixed(1));
             return item;
         });
     }

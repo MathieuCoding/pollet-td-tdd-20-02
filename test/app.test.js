@@ -71,6 +71,20 @@ describe('Testing the Basket Function', function() {
         expect(b6.items).to.deep.equal([{name: 'Apple', price: 1.8}, {name: 'Banana', price: 2.7}]);
         done();
     })
+    it('10. The item price cannot be negative or zero', function(done) {
+        let b7 = new Basket();
+        b7.addItem('Apple', 2);
+        b7.addDiscount(1);
+        expect(b7.items).to.deep.equal([{name: 'Apple', price: 0}]);
+        done();
+    })
+    it('11. The discount cannot be 100% or more', function(done) {
+        let b8 = new Basket();
+        b8.addItem('Apple', 2);
+        b8.addDiscount(1.1);
+        expect(b8.items).to.deep.equal([{name: 'Apple', price: -0.2}]);
+        done();
+    })
 });
 
 
