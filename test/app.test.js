@@ -97,7 +97,7 @@ describe('Testing the Basket Function', function() {
     it('13. The item price cannot be negative or zero', function(done) {
         let b10 = new Basket();
         b10.addItem('Apple', 2, 1, '2023-12-31');
-        expect(() => b10.addAmountDiscount(1)).to.throw('The item price cannot be negative or zero');
+        expect(() => b10.addAmountDiscount(2, 'Apple')).to.throw('The item price cannot be negative or zero');
         done();
     })
 });

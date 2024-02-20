@@ -71,9 +71,13 @@ class Basket {
         }
         this.items = this.items.map(item => {
             if (item.name === itemName) {
+
                 let totalPrice = item.price * item.quantity;
                 totalPrice -= discount;
                 item.price = totalPrice / item.quantity;
+                if (item.price <= 0) {
+                    throw new Error('The item price cannot be negative or zero');
+                }
                 item.price = parseFloat(item.price.toFixed(2));
             }
             return item;
