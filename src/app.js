@@ -49,7 +49,8 @@ class Basket {
     // }
     getTotalPrice() {
         this.items.forEach(item => {
-            console.log(`${item.name}: ${item.price}`);
+            let totalPrice = item.price * item.quantity;
+            console.log(`${item.name}: ${totalPrice}`);
         });
 
         return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
