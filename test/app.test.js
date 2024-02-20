@@ -1,6 +1,8 @@
 const Cube = require('../src/app').Cube;
 const Basket = require('../src/app').Basket;
 const expect = require('chai').expect;
+const assert = require('assert');
+const sinon = require('sinon');
 
 describe('Testing the Cube Functions', function() {
     it('1. The side length of the Cube', function(done) {
@@ -105,6 +107,18 @@ describe('Testing the Basket Function', function() {
         b11.addItem('Apple', 2, 1, '2023-12-31');
         b11.addAmountDiscount(0.5, 'Apple');
         expect(b11.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 0.75, expiryDate: '2023-12-31'}]);
+        done();
+    })
+    it('15. The total price function should display the original and discounted price', function(done) {
+        let b12 = new Basket();
+        b12.addItem('Apple', 2, 1, '2023-12-31');
+
+        const consoleSpy = sinon.spy(console, 'log');
+        b12.addAmountDiscount(0.5, 'Apple');
+        expect(b12.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 0.75, expiryDate: '2023-12-31'}]);
+        assert(consoleSpy.calledWith('Apple: 1'));
+        assert(consoleSpy.calledWith('Apple: 0.75'));
+        consoleSpy.restore();
         done();
     })
 });
