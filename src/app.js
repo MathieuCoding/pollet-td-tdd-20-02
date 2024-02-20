@@ -44,9 +44,17 @@ class Basket {
         }
     }
 
+    // getTotalPrice() {
+    //     return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    // }
     getTotalPrice() {
+        this.items.forEach(item => {
+            console.log(`${item.name}: ${item.price}`);
+        });
+
         return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
     }
+
 
     emptyBasket() {
         this.items = [];

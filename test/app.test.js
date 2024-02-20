@@ -114,9 +114,11 @@ describe('Testing the Basket Function', function() {
         b12.addItem('Apple', 2, 1, '2023-12-31');
 
         const consoleSpy = sinon.spy(console, 'log');
+        b12.getTotalPrice()
+        assert(consoleSpy.calledWith('Apple: 1'));
         b12.addAmountDiscount(0.5, 'Apple');
         expect(b12.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 0.75, expiryDate: '2023-12-31'}]);
-        assert(consoleSpy.calledWith('Apple: 1'));
+        b12.getTotalPrice();
         assert(consoleSpy.calledWith('Apple: 0.75'));
         consoleSpy.restore();
         done();
