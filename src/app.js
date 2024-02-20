@@ -22,13 +22,13 @@ class Basket {
         this.items = [];
     }
 
-    addItem(name, quantity, price) {
+    addItem(name, quantity, price, expiryDate) {
         const existingItemIndex = this.items.findIndex(item => item.name === name);
 
         if (existingItemIndex !== -1) {
             this.items[existingItemIndex].quantity += quantity;
         } else {
-            this.items.push({ name, quantity, price });
+            this.items.push({ name, quantity, price, expiryDate });
         }
     }
 
@@ -45,7 +45,7 @@ class Basket {
     }
 
     getTotalPrice() {
-        return this.items.reduce((total, item) => total + item.price, 0);
+        return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
     }
 
     emptyBasket() {
@@ -53,6 +53,9 @@ class Basket {
     }
 
     addDiscount(discount) {
+        if (discount < 0 || discount > 1) {
+            throw new Error('Discount must be between 0 and 1');
+        }
         this.items = this.items.map(item => {
             item.price = item.price - (item.price * discount);
             item.price = parseFloat(item.price.toFixed(1));
