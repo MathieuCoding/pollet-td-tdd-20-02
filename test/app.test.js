@@ -94,6 +94,12 @@ describe('Testing the Basket Function', function() {
         expect(b9.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 0.75, expiryDate: '2023-12-31'}, {name: 'Banana', quantity: 3, price: 2, expiryDate: '2023-12-31'}]);
         done();
     })
+    it('13. The item price cannot be negative or zero', function(done) {
+        let b10 = new Basket();
+        b10.addItem('Apple', 2, 1, '2023-12-31');
+        expect(() => b10.addAmountDiscount(1)).to.throw('The item price cannot be negative or zero');
+        done();
+    })
 });
 
 
