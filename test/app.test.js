@@ -63,19 +63,20 @@ describe('Testing the Basket Function', function() {
         expect(b5.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 1, expiryDate: '2023-12-31'}]);
         done();
     })
+    // Tests for the discounts handling V1
     it('9. Adding a discount to the items in the basket', function(done) {
         let b6 = new Basket();
         b6.addItem('Apple', 2, 1, '2023-12-31');
         b6.addItem('Banana', 3, 2, '2023-12-31');
-        b6.addDiscount(0.1);
+        b6.addDiscount(0.1, 'Apple');
+        b6.addDiscount(0.1, 'Banana');
         expect(b6.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 0.9, expiryDate: '2023-12-31'}, {name: 'Banana', quantity: 3, price: 1.8, expiryDate: '2023-12-31'}]);
         done();
     })
     it('10. The item price cannot be negative or zero', function(done) {
         let b7 = new Basket();
         b7.addItem('Apple', 2, 1, '2023-12-31');
-        b7.addDiscount(1);
-        expect(b7.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 0, expiryDate: '2023-12-31'}]);
+        expect(() => b7.addDiscount(1.1)).to.throw('Discount must be between 0 and 1');
         done();
     })
     it('11. The discount cannot be 100% or more', function(done) {
@@ -83,7 +84,16 @@ describe('Testing the Basket Function', function() {
     b8.addItem('Apple', 1, 1, '2023-12-31');
     expect(() => b8.addDiscount(1.1)).to.throw('Discount must be between 0 and 1');
     done();
-})
+    })
+    // Test for the discounts handling V2
+    it('12. Adding an amount discount to only one item in the basket', function(done) {
+        let b9 = new Basket();
+        b9.addItem('Apple', 2, 1, '2023-12-31');
+        b9.addItem('Banana', 3, 2, '2023-12-31');
+        b9.addAmountDiscount(0.5, 'Apple');
+        expect(b9.items).to.deep.equal([{name: 'Apple', quantity: 2, price: 0.75, expiryDate: '2023-12-31'}, {name: 'Banana', quantity: 3, price: 2, expiryDate: '2023-12-31'}]);
+        done();
+    })
 });
 
 

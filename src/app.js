@@ -52,13 +52,30 @@ class Basket {
         this.items = [];
     }
 
-    addDiscount(discount) {
+    addDiscount(discount, itemName) {
         if (discount < 0 || discount > 1) {
             throw new Error('Discount must be between 0 and 1');
         }
         this.items = this.items.map(item => {
-            item.price = item.price - (item.price * discount);
-            item.price = parseFloat(item.price.toFixed(1));
+            if (item.name === itemName) {
+                item.price = item.price - (item.price * discount);
+                item.price = parseFloat(item.price.toFixed(1));
+            }
+            return item;
+        });
+    }
+
+    addAmountDiscount(discount, itemName) {
+        if (discount <= 0) {
+            throw new Error('Discount must be greater than 0');
+        }
+        this.items = this.items.map(item => {
+            if (item.name === itemName) {
+                let totalPrice = item.price * item.quantity;
+                totalPrice -= discount;
+                item.price = totalPrice / item.quantity;
+                item.price = parseFloat(item.price.toFixed(2));
+            }
             return item;
         });
     }
